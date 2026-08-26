@@ -1,8 +1,12 @@
+import { useState } from "react";
 import Header from "./components/header";
 import ProductCard from "./components/ProductCard";
 import { data } from "./data/data";
 
 function App() {
+
+  const [store, setStore] = useState([])
+
   return (
     <>
       <main className="mx-auto max-w-[1440px] px-6 py-10 md:px-10 lg:px-12">
@@ -33,7 +37,7 @@ function App() {
                 </p>
               </div>
             ) : (
-              <div>jaja</div>
+              <div></div>
             )}
           </aside>
         </div>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Product } from "../types/product";
 import QuantityStepper from "./QuantityStepper";
 
@@ -6,6 +7,9 @@ type ProductCardTypes = {
 };
 
 export default function ProductCard({ product }: ProductCardTypes) {
+  
+  const [quantity, setQuantity] = useState(1)
+
   return (
     <div className="w-full max-w-[300px]">
       {/* Image + Cart button */}
@@ -17,7 +21,7 @@ export default function ProductCard({ product }: ProductCardTypes) {
         />
 
         {/* Add cart Button */}
-        {true ? (
+        {quantity === 0 ? (
           <button
             className="
               absolute
