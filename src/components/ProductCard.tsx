@@ -21,7 +21,7 @@ export default function ProductCard({ product }: ProductCardTypes) {
         />
 
         {/* Add cart Button */}
-        {quantity === 0 ? (
+        {quantity === 1 ? (
           <button
             className="
               absolute
