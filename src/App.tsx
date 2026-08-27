@@ -1,32 +1,17 @@
-import { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import Header from "./components/Header";
-
-import { getProducts } from "./services/product";
-import type { Product } from "./types/product";
+import { useProducts } from "./hooks/useProducts";
 
 function App() {
-  // const [store, setStore] = useState([])
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data: products = [], isLoading, isError, error } = useProducts();
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data);
-      } catch (error) {
-        setError("No se puedieron cargar los productos");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (isLoading) {
+    return <p>Cargando productos...</p>;
+  }
 
-    loadProducts();
-  }, []);
-
+  if (isError) {
+    return <p>Error al cargar los productos: {error.message}</p>;
+  }
 
   return (
     <>
@@ -37,7 +22,7 @@ function App() {
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
               {products.map((product) => (
-                <ProductCard key={product.name} product={product} />
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           </section>
