@@ -10,7 +10,7 @@ function App() {
 
       <Route path="/product/:id" element={<ProductDetailPage />} />
 
-      <Route path="#" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
