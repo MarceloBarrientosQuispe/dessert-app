@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Product } from "../types/product";
 import QuantityStepper from "./QuantityStepper";
 import { Link } from "react-router-dom";
+import { useCartStore } from "../store/cartStore";
 
 type ProductCardTypes = {
   product: Product;
 };
 
 export default function ProductCard({ product }: ProductCardTypes) {
-  const [quantity, setQuantity] = useState(1);
+  const item = useCartStore((state) =>
+    state.items.find((item) => item.id === product.id),
+  );
+
+  const addToCart = useCartStore((state) => state.addToCart);
+
+  const quantity = item?.quantity ?? 0;
 
   return (
-    <div className="w-full max-w-[300px]">
-      {/* Image + Cart button */}
+    <article className="w-full max-w-[300px]">
       <div className="relative">
         <Link to={`/product/${product.id}`}>
           <img
@@ -22,9 +28,10 @@ export default function ProductCard({ product }: ProductCardTypes) {
           />
         </Link>
 
-        {/* Add cart Button */}
-        {quantity === 1 ? (
+        {quantity === 0 ? (
           <button
+            type="button"
+            onClick={() => addToCart(product)}
             className="
               absolute
               bottom-0
@@ -57,11 +64,9 @@ export default function ProductCard({ product }: ProductCardTypes) {
             Add to Cart
           </button>
         ) : (
-          <QuantityStepper />
+          <QuantityStepper productId={product.id} quantity={quantity} />
         )}
       </div>
-
-      {/* Product information */}
       <div className="mt-10">
         <p className="text-sm font-normal text-[#a08f89]">{product.category}</p>
 
@@ -71,10 +76,10 @@ export default function ProductCard({ product }: ProductCardTypes) {
           </h2>
         </Link>
 
-        <h3 className="mt-1 text-xl font-medium text-[#c94320]">
+        <p className="mt-1 text-xl font-medium text-[#c94320]">
           ${product.price.toFixed(2)}
-        </h3>
+        </p>
       </div>
-    </div>
+    </article>
   );
 }

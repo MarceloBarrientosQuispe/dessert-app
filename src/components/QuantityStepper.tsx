@@ -1,4 +1,17 @@
-export default function QuantityStepper() {
+import { useMemo } from "react";
+import { useCartStore } from "../store/cartStore";
+
+type QuantityStepperProps = {
+  productId: number;
+  quantity: number;
+};
+
+export default function QuantityStepper({
+  productId,
+  quantity,
+}: QuantityStepperProps) {
+  const { increaseQuantity, decreaseQuantity } = useCartStore();
+
   return (
     <div
       className="absolute
@@ -14,6 +27,7 @@ export default function QuantityStepper() {
         <button
           type="button"
           className="w-5 h-5 flex items-center justify-center rounded-full border border-white hover:bg-white hover:text-[#c73b0f] transition-colors"
+          onClick={() => decreaseQuantity(productId)}
         >
           <img
             src="/images/icon-decrement-quantity.svg"
@@ -22,11 +36,12 @@ export default function QuantityStepper() {
           />
         </button>
 
-        <span className="text-sm font-semibold">1</span>
+        <span className="text-sm font-semibold">{quantity}</span>
 
         <button
           type="button"
           className="w-5 h-5 flex items-center justify-center rounded-full border border-white hover:bg-white hover:text-[#c73b0f] transition-colors"
+          onClick={() => increaseQuantity(productId)}
         >
           <img
             src="/images/icon-increment-quantity.svg"
