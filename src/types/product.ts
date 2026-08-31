@@ -7,11 +7,16 @@ export type Product = {
     desktop: string;
   };
   name: string;
-  category: string;
+  categoryId: number;
   price: number;
 };
 
 export type ProductFilters = {
   search?: string;
-  category?: string;
+  category?: number;
 };
+
+export type Category = {
+  id: number;
+  name: string;
+}

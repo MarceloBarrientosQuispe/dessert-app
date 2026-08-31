@@ -9,7 +9,7 @@
         "desktop": "/images/image-waffle-desktop.jpg"
       },
       "name": "Waffle with Berries",
-      "category": "Waffle",
+      "categoryId": 1,
       "price": 6.5
     },
     {
@@ -21,7 +21,7 @@
         "desktop": "/images/image-creme-brulee-desktop.jpg"
       },
       "name": "Vanilla Bean Crème Brûlée",
-      "category": "Crème Brûlée",
+      "categoryId": 2,
       "price": 7
     },
     {
@@ -33,7 +33,7 @@
         "desktop": "/images/image-macaron-desktop.jpg"
       },
       "name": "Macaron Mix of Five",
-      "category": "Macaron",
+      "categoryId": 3,
       "price": 8
     },
     {
@@ -45,7 +45,7 @@
         "desktop": "/images/image-tiramisu-desktop.jpg"
       },
       "name": "Classic Tiramisu",
-      "category": "Tiramisu",
+      "categoryId": 4,
       "price": 5.5
     },
     {
@@ -57,7 +57,7 @@
         "desktop": "/images/image-baklava-desktop.jpg"
       },
       "name": "Pistachio Baklava",
-      "category": "Baklava",
+      "categoryId": 5,
       "price": 4
     },
     {
@@ -69,7 +69,7 @@
         "desktop": "/images/image-meringue-tablet.jpg"
       },
       "name": "Lemon Meringue Pie",
-      "category": "Pie",
+      "categoryId": 6,
       "price": 5
     },
     {
@@ -81,7 +81,7 @@
         "desktop": "/images/image-cake-desktop.jpg"
       },
       "name": "Red Velvet Cake",
-      "category": "Cake",
+      "categoryId": 7,
       "price": 4.5
     },
     {
@@ -93,7 +93,7 @@
         "desktop": "/images/image-brownie-desktop.jpg"
       },
       "name": "Salted Caramel Brownie",
-      "category": "Brownie",
+      "categoryId": 8,
       "price": 4.5
     },
     {
@@ -105,8 +105,46 @@
         "desktop": "/images/image-panna-cotta-desktop.jpg"
       },
       "name": "Vanilla Panna Cotta",
-      "category": "Panna Cotta",
+      "categoryId": 9,
       "price": 6.5
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Waffle"
+    },
+    {
+      "id": 2,
+      "name": "Crème Brûlée"
+    },
+    {
+      "id": 3,
+      "name": "Macaron"
+    },
+    {
+      "id": 4,
+      "name": "Tiramisu"
+    },
+    {
+      "id": 5,
+      "name": "Baklava"
+    },
+    {
+      "id": 6,
+      "name": "Pie"
+    },
+    {
+      "id": 7,
+      "name": "Cake"
+    },
+    {
+      "id": 8,
+      "name": "Brownie"
+    },
+    {
+      "id": 9,
+      "name": "Panna Cotta"
     }
   ]
 }
