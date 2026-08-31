@@ -1,24 +1,26 @@
 import { useState } from "react";
 import type { Product } from "../types/product";
 import QuantityStepper from "./QuantityStepper";
+import { Link } from "react-router-dom";
 
 type ProductCardTypes = {
   product: Product;
 };
 
 export default function ProductCard({ product }: ProductCardTypes) {
-  
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(1);
 
   return (
     <div className="w-full max-w-[300px]">
       {/* Image + Cart button */}
       <div className="relative">
-        <img
-          src={product.image.desktop}
-          alt={product.name}
-          className="w-full rounded-xl object-cover"
-        />
+        <Link to={`/product/${product.id}`}>
+          <img
+            src={product.image.desktop}
+            alt={product.name}
+            className="w-full rounded-xl object-cover"
+          />
+        </Link>
 
         {/* Add cart Button */}
         {quantity === 1 ? (
@@ -52,7 +54,6 @@ export default function ProductCard({ product }: ProductCardTypes) {
               alt=""
               className="h-5 w-5"
             />
-
             Add to Cart
           </button>
         ) : (
@@ -62,13 +63,13 @@ export default function ProductCard({ product }: ProductCardTypes) {
 
       {/* Product information */}
       <div className="mt-10">
-        <p className="text-sm font-normal text-[#a08f89]">
-          {product.category}
-        </p>
+        <p className="text-sm font-normal text-[#a08f89]">{product.category}</p>
 
-        <h2 className="mt-1 text-xl font-semibold text-black">
-          {product.name}
-        </h2>
+        <Link to={`/product/${product.id}`}>
+          <h2 className="mt-1 text-xl font-semibold text-black">
+            {product.name}
+          </h2>
+        </Link>
 
         <h3 className="mt-1 text-xl font-medium text-[#c94320]">
           ${product.price.toFixed(2)}
