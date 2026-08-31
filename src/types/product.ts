@@ -10,3 +10,8 @@ export type Product = {
   category: string;
   price: number;
 };
+
+export type ProductFilters = {
+  search?: string;
+  category?: string;
+};
