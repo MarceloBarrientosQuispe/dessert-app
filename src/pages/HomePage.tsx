@@ -33,6 +33,8 @@ export default function HomePage() {
     return <p>Error al cargar los productos: {error.message}</p>;
   }
 
+  console.log(search);
+
   return (
     <>
       <main className="mx-auto max-w-[1440px] px-6 py-10 md:px-10 lg:px-12">

@@ -12,10 +12,12 @@ export const getProducts = async (
 
   const response = await apiUrl.get<Product[]>("/products", {
     params: {
-      name_like: filters?.search || undefined,
+      name: filters?.search || undefined,
       category: filters?.category || undefined,
     },
   });
+
+  console.log("PRODUCTS:", response.data);
 
   return response.data;
 };
