@@ -1,10 +1,20 @@
 import { Link, useParams } from "react-router-dom";
-import { useProduct } from "../hooks/useProduct";
+import { useProductQuery } from "../hooks/useProductsQueries";
+import { useCategoriesQuery } from "../hooks/useCategoriesQueries";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
 
-  const { data: product, isLoading, isError } = useProduct(id ?? "");
+  const {
+    data: product,
+    isLoading,
+    isError,
+  } = useProductQuery(id ? Number(id) : NaN);
+
+  const { data: categories = [] } = useCategoriesQuery();
+  const categoryName = categories.find(
+    (cat) => cat.id === product?.categoryId,
+  )?.name;
 
   if (isLoading) {
     return (
@@ -43,7 +53,11 @@ export default function ProductDetailPage() {
         />
 
         <div>
-          <p className="text-sm text-gray-500">{product.category}</p>
+          {categoryName && (
+            <span className="inline-block rounded-full bg-[#fff3ee] px-3 py-1 text-xs font-medium text-[#c73b0f]">
+              {categoryName}
+            </span>
+          )}
 
           <h1 className="mt-2 text-4xl font-bold">{product.name}</h1>
 

@@ -1,8 +1,11 @@
+import { useCategoriesQuery } from "../hooks/useCategoriesQueries";
+import type { Category } from "../types/product";
+
 type ProductFiltersProps = {
   search: string;
-  category: string;
+  category: number | "";
   onSearchChange: (value: string) => void;
-  onCategoryChange: (value: string) => void;
+  onCategoryChange: (value: number | "") => void;
 };
 
 export default function ProductFilters({
@@ -11,6 +14,8 @@ export default function ProductFilters({
   onCategoryChange,
   onSearchChange,
 }: ProductFiltersProps) {
+  const { data: categories = [] } = useCategoriesQuery();
+
   return (
     <div className="mb-8 flex flex-col gap-4 md:flex-row">
       <input
@@ -23,19 +28,17 @@ export default function ProductFilters({
 
       <select
         value={category}
-        onChange={(event) => onCategoryChange(event.target.value)}
+        onChange={(event) =>
+          onCategoryChange(event.target.value ? Number(event.target.value) : "")
+        }
         className="rounded-lg border px-4 py-3"
       >
         <option value="">All categories</option>
-        <option value="Waffle">Waffle</option>
-        <option value="Crème Brûlée">Crème Brûlée</option>
-        <option value="Macaron">Macaron</option>
-        <option value="Tiramisu">Tiramisu</option>
-        <option value="Baklava">Baklava</option>
-        <option value="Pie">Pie</option>
-        <option value="Cake">Cake</option>
-        <option value="Brownie">Brownie</option>
-        <option value="Panna Cotta">Panna Cotta</option>
+        {categories.map((cat: Category) => (
+          <option key={cat.id} value={cat.id}>
+            {cat.name}
+          </option>
+        ))}
       </select>
     </div>
   );

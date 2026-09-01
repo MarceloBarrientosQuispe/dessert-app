@@ -13,10 +13,10 @@ export type Product = {
 
 export type ProductFilters = {
   search?: string;
-  category?: number;
+  category?: number | "";
 };
 
 export type Category = {
   id: number;
   name: string;
-}
+};

@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
-import type { Product } from "../types/product";
+import type { Category, Product } from "../types/product";
 import QuantityStepper from "./QuantityStepper";
 import { Link } from "react-router-dom";
 import { useCartStore } from "../store/cartStore";
+import { useCategoriesQuery } from "../hooks/useCategoriesQueries";
 
 type ProductCardTypes = {
   product: Product;
@@ -14,6 +14,11 @@ export default function ProductCard({ product }: ProductCardTypes) {
   );
 
   const addToCart = useCartStore((state) => state.addToCart);
+
+  const { data: categories = [] } = useCategoriesQuery();
+  const categoryName = categories.find(
+    (cat: Category) => cat.id === product.categoryId,
+  )?.name;
 
   const quantity = item?.quantity ?? 0;
 
@@ -68,7 +73,11 @@ export default function ProductCard({ product }: ProductCardTypes) {
         )}
       </div>
       <div className="mt-10">
-        <p className="text-sm font-normal text-[#a08f89]">{product.category}</p>
+        {categoryName && (
+          <span className="inline-block rounded-full bg-[#fff3ee] px-3 py-1 text-xs font-medium text-[#c73b0f]">
+            {categoryName}
+          </span>
+        )}
 
         <Link to={`/product/${product.id}`}>
           <h2 className="mt-1 text-xl font-semibold text-black">
