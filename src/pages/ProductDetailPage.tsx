@@ -28,7 +28,7 @@ export default function ProductDetailPage() {
   if (isLoading) {
     return (
       <main className="mx-auto max-w-[1200px] px-6 py-10">
-        <p>Cargando producto...</p>
+        <p>Loading Products...</p>
       </main>
     );
   }

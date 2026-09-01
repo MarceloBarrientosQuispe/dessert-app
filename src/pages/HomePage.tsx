@@ -33,7 +33,7 @@ export default function HomePage() {
   const totalPages = data?.totalPages ?? 1;
 
   if (isError) {
-    return <p>Error al cargar los productos: {error.message}</p>;
+    return <p>Error to loading data: {error.message}</p>;
   }
 
   const handleConfirmOrder = () => {
@@ -105,11 +105,11 @@ export default function HomePage() {
               disabled={page === 1}
               className="rounded-full border border-[#caafa7] px-5 py-2 font-medium text-[#260f08] disabled:opacity-40"
             >
-              Anterior
+              Back
             </button>
 
             <span className="text-sm text-[#87635a]">
-              Página {page} de {totalPages}
+              Page {page} of {totalPages}
             </span>
 
             <button
@@ -118,7 +118,7 @@ export default function HomePage() {
               disabled={page >= totalPages}
               className="rounded-full border border-[#caafa7] px-5 py-2 font-medium text-[#260f08] disabled:opacity-40"
             >
-              Siguiente
+              Next
             </button>
           </div>
         )}
