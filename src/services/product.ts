@@ -7,7 +7,7 @@ import type {
 import type { ProductFormValues } from "../schema/productSchema";
 
 const apiUrl = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export const PRODUCTS_PER_PAGE = 8;
@@ -25,17 +25,14 @@ type JsonServerPaginatedResponse = {
 export const getProducts = async (
   filters?: ProductFilters,
 ): Promise<PaginatedProducts> => {
-  const response = await apiUrl.get<JsonServerPaginatedResponse>(
-    "/products",
-    {
-      params: {
-        name: filters?.search || undefined,
-        categoryId: filters?.category || undefined,
-        _page: filters?.page || 1,
-        _per_page: PRODUCTS_PER_PAGE,
-      },
+  const response = await apiUrl.get<JsonServerPaginatedResponse>("/products", {
+    params: {
+      name: filters?.search || undefined,
+      categoryId: filters?.category || undefined,
+      _page: filters?.page || 1,
+      _per_page: PRODUCTS_PER_PAGE,
     },
-  );
+  });
 
   return {
     data: response.data.data,
