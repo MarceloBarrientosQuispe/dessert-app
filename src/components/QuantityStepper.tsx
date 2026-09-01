@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useCartStore } from "../store/cartStore";
 
 type QuantityStepperProps = {
