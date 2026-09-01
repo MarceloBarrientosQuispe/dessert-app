@@ -14,9 +14,16 @@ export type Product = {
 export type ProductFilters = {
   search?: string;
   category?: number | "";
+  page?: number;
 };
 
 export type Category = {
   id: number;
   name: string;
+};
+
+export type PaginatedProducts = {
+  data: Product[];
+  totalCount: number;
+  totalPages: number;
 };

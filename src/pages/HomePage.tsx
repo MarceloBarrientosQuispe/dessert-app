@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import ProductFilters from "../components/ProductFilters";
 import Header from "../components/Header";
@@ -7,11 +8,11 @@ import CartDrawer from "../components/CartDrawer";
 import { useProductsQuery } from "../hooks/useProductsQueries";
 import { useCartStore } from "../store/cartStore";
 import ConfirmOrderModal from "../components/ConfirmOrderModal";
-import { Link } from "react-router-dom";
 
 export default function HomePage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<number | "">("");
+  const [page, setPage] = useState(1);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isOrderConfirmed, setIsOrderConfirmed] = useState(false);
 
@@ -22,15 +23,14 @@ export default function HomePage() {
     0,
   );
 
-  const {
-    data: products = [],
-    isLoading,
-    isError,
-    error,
-  } = useProductsQuery({
+  const { data, isLoading, isError, error } = useProductsQuery({
     search,
     category,
+    page,
   });
+
+  const products = data?.data ?? [];
+  const totalPages = data?.totalPages ?? 1;
 
   if (isError) {
     return <p>Error al cargar los productos: {error.message}</p>;
@@ -46,10 +46,21 @@ export default function HomePage() {
     clearCart();
   };
 
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(1);
+  };
+
+  const handleCategoryChange = (value: number | "") => {
+    setCategory(value);
+    setPage(1);
+  };
+
   return (
     <>
       <main className="mx-auto max-w-[1440px] px-6 py-10 md:px-10 lg:px-12">
         <Header onCartClick={() => setIsCartOpen(true)} />
+
         <div className="mb-6">
           <Link
             to="/product/new"
@@ -58,11 +69,12 @@ export default function HomePage() {
             + Add Product
           </Link>
         </div>
+
         <ProductFilters
           search={search}
           category={category}
-          onSearchChange={setSearch}
-          onCategoryChange={setCategory}
+          onSearchChange={handleSearchChange}
+          onCategoryChange={handleCategoryChange}
         />
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
@@ -84,6 +96,32 @@ export default function HomePage() {
             </div>
           )}
         </div>
+
+        {!isLoading && products.length > 0 && (
+          <div className="mt-10 flex items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+              className="rounded-full border border-[#caafa7] px-5 py-2 font-medium text-[#260f08] disabled:opacity-40"
+            >
+              Anterior
+            </button>
+
+            <span className="text-sm text-[#87635a]">
+              Página {page} de {totalPages}
+            </span>
+
+            <button
+              type="button"
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page >= totalPages}
+              className="rounded-full border border-[#caafa7] px-5 py-2 font-medium text-[#260f08] disabled:opacity-40"
+            >
+              Siguiente
+            </button>
+          </div>
+        )}
       </main>
 
       <CartDrawer

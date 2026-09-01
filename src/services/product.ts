@@ -1,24 +1,47 @@
 import axios from "axios";
-import type { Product, ProductFilters } from "../types/product";
+import type {
+  PaginatedProducts,
+  Product,
+  ProductFilters,
+} from "../types/product";
 import type { ProductFormValues } from "../schema/productSchema";
 
 const apiUrl = axios.create({
   baseURL: "http://localhost:3000",
 });
 
+export const PRODUCTS_PER_PAGE = 8;
+
+type JsonServerPaginatedResponse = {
+  first: number;
+  prev: number | null;
+  next: number | null;
+  last: number;
+  pages: number;
+  items: number;
+  data: Product[];
+};
+
 export const getProducts = async (
   filters?: ProductFilters,
-): Promise<Product[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 1200));
-
-  const response = await apiUrl.get<Product[]>("/products", {
-    params: {
-      name: filters?.search || undefined,
-      categoryId: filters?.category || undefined,
+): Promise<PaginatedProducts> => {
+  const response = await apiUrl.get<JsonServerPaginatedResponse>(
+    "/products",
+    {
+      params: {
+        name: filters?.search || undefined,
+        categoryId: filters?.category || undefined,
+        _page: filters?.page || 1,
+        _per_page: PRODUCTS_PER_PAGE,
+      },
     },
-  });
+  );
 
-  return response.data;
+  return {
+    data: response.data.data,
+    totalCount: response.data.items,
+    totalPages: response.data.pages,
+  };
 };
 
 export const getProductById = async (id: number): Promise<Product> => {
