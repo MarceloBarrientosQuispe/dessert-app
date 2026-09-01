@@ -5,6 +5,8 @@ import {
   type ProductFormInput,
 } from "../schema/productSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { Category } from "../types/product";
+import { useCategoriesQuery } from "../hooks/useCategoriesQueries";
 
 type ProductFormProps = {
   defaultValues?: ProductFormValues;
@@ -19,6 +21,8 @@ export default function ProductForm({
   isSubmitting,
   submitLabel,
 }: ProductFormProps) {
+  const { data: categories = [] } = useCategoriesQuery();
+
   const {
     register,
     handleSubmit,
@@ -37,7 +41,7 @@ export default function ProductForm({
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
       <div>
         <label className="mb-1 block text-sm font-medium text-[#260f08]">
-          Name
+          Nombre
         </label>
 
         <input
@@ -53,7 +57,7 @@ export default function ProductForm({
 
       <div>
         <label className="mb-1 block text-sm font-medium text-[#260f08]">
-          Price
+          Precio
         </label>
 
         <input
@@ -70,14 +74,20 @@ export default function ProductForm({
 
       <div>
         <label className="mb-1 block text-sm font-medium text-[#260f08]">
-          Category (ID)
+          Categoría
         </label>
 
-        <input
-          type="number"
+        <select
           {...register("categoryId")}
           className="w-full rounded-lg border px-4 py-3"
-        />
+        >
+          <option value={0}>Selecciona una categoría</option>
+          {categories.map((cat: Category) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
 
         {errors.categoryId && (
           <p className="mt-1 text-sm text-red-600">
@@ -88,7 +98,7 @@ export default function ProductForm({
 
       <div>
         <label className="mb-1 block text-sm font-medium text-[#260f08]">
-          URL image
+          URL de imagen
         </label>
 
         <input
@@ -107,7 +117,7 @@ export default function ProductForm({
         disabled={isSubmitting}
         className="mt-2 w-full rounded-full bg-[#c73b0f] py-4 font-bold text-white transition hover:bg-[#a92f09] disabled:opacity-60"
       >
-        {isSubmitting ? "Saving..." : submitLabel}
+        {isSubmitting ? "Guardando..." : submitLabel}
       </button>
     </form>
   );
