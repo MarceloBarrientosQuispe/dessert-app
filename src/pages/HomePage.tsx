@@ -7,6 +7,7 @@ import CartDrawer from "../components/CartDrawer";
 import { useProductsQuery } from "../hooks/useProductsQueries";
 import { useCartStore } from "../store/cartStore";
 import ConfirmOrderModal from "../components/ConfirmOrderModal";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   const [search, setSearch] = useState("");
@@ -49,7 +50,14 @@ export default function HomePage() {
     <>
       <main className="mx-auto max-w-[1440px] px-6 py-10 md:px-10 lg:px-12">
         <Header onCartClick={() => setIsCartOpen(true)} />
-
+        <div className="mb-6">
+          <Link
+            to="/product/new"
+            className="inline-block rounded-full bg-[#c73b0f] px-6 py-3 font-bold text-white transition hover:bg-[#a92f09]"
+          >
+            + Add Product
+          </Link>
+        </div>
         <ProductFilters
           search={search}
           category={category}
